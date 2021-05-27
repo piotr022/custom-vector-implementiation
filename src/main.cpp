@@ -34,8 +34,8 @@ TEST(Vec_main, emplace_back)
   int counter = 0;
   for (President actual_president : elections)
   {
-    std::string expected_name = "Johny" + std::to_string(counter);
-    std::string expected_country = "Watikan" + std::to_string(counter);
+    std::string expected_name = "John" + std::to_string(counter);
+    std::string expected_country = "Italy" + std::to_string(counter);
     EXPECT_EQ(actual_president.country, expected_country);
     counter++;
   }
