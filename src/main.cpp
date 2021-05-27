@@ -1,9 +1,45 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "vec_training.hpp"
-#include "vec_training.cpp" //dont know what is wrong in cmakelists.txt
+#include "vec_training.cpp" 
+#include <string>
 
-#define VEC_TEST_SIZE 200000
+#define VEC_TEST_SIZE 10000
+
+TEST(Vec_main, emplace_back)
+{
+  class President
+  {
+  public:
+    std::string name;
+    std::string country;
+    int year;
+    President(){};
+    President(std::string _name, std::string _country, int _year)
+        : name(_name), country(_country), year(_year){};
+  };
+
+  Vector<President> elections;
+
+  for (int i = 0; i <= VEC_TEST_SIZE; i++)
+  {
+    std::string name = "Johny" + std::to_string(i);
+    std::string county = "Watikan" + std::to_string(i);
+    elections.emplace_back(name, county, i);
+  }
+
+  Vector<President>::iterator p_it;
+  p_it = elections;
+
+  int counter = 0;
+  for (President actual_president : elections)
+  {
+    std::string expected_name = "Johny" + std::to_string(counter);
+    std::string expected_country = "Watikan" + std::to_string(counter);
+    EXPECT_EQ(actual_president.country, expected_country);
+    counter++;
+  }
+}
 
 TEST(Vec_main, operator_assignment)
 {
@@ -20,7 +56,6 @@ TEST(Vec_main, operator_assignment)
   for (int i : vec1)
   {
     EXPECT_EQ(vec1[i], vec2_c1[i]);
-    
   }
 }
 
@@ -47,48 +82,47 @@ TEST(Vec_main, dyn_push_back_and_operatorEqual)
 
   for (int i = 0; i < VEC_TEST_SIZE; i++)
   {
-   vec1.push_back(i); //filing with values
+    vec1.push_back(i); //filing with values
   }
 
   Vector<int> vec2_c1;
   vec2_c1 = vec1; // additionaly copy vec1 to vec2
 
-  for(int i : vec2_c1)
+  for (int i : vec2_c1)
   {
     EXPECT_EQ(vec1[i], vec2_c1[i]);
-    EXPECT_EQ(vec2_c1[i] , i);
+    EXPECT_EQ(vec2_c1[i], i);
   }
 }
 
 TEST(Vec_main, pop_back_and_empty)
 {
-    Vector<int> vec1;
+  Vector<int> vec1;
 
   for (int i = 0; i < VEC_TEST_SIZE; i++)
   {
-   vec1.push_back(i); //filing with values
+    vec1.push_back(i); //filing with values
   }
 
   Vector<int> vec2;
   size_t temp_size = vec1.size();
   int cycles = 0;
-  while(!vec1.empty())
+  while (!vec1.empty())
   {
     vec2.push_back(vec1.back());
     vec1.pop_back();
     cycles++;
   }
-//checking if num of cycles is equal to first size
+  //checking if num of cycles is equal to first size
   EXPECT_EQ(cycles, temp_size);
   //checking if vec2 size == tempsize
   EXPECT_EQ(vec2.size(), temp_size);
 
-  for(int i : vec2)
+  for (int i : vec2)
   {
     //checkig if vec2 elements are in reverse order
-    EXPECT_EQ(vec2[i], (vec2.size()-1)-i);
+    EXPECT_EQ(vec2[i], (vec2.size() - 1) - i);
   }
-
 }
 TEST(Vec_Iterator, Iterator_read_test)
 {
@@ -97,13 +131,12 @@ TEST(Vec_Iterator, Iterator_read_test)
   {
     vec1.at(i) = i; //filing with values
   }
- 
 
   Vector<int>::iterator it_test;
   it_test = vec1;
   for (int i : vec1)
   {
-    EXPECT_EQ(vec1[i], *(++it_test -1));
+    EXPECT_EQ(vec1[i], *(++it_test - 1));
   }
   // EXPECT_EQ(vec1[i], i);
 }
@@ -118,7 +151,7 @@ int main(int argc, char **argv)
   for (int i = 0; i < vec1.size(); i++)
   {
     vec1.at(i) = i;
-  //  vec1.push_back(i);
+    //  vec1.push_back(i);
   }
   Vector<int> vec2_c1(4);
   vec2_c1 = vec1; //(&vec1);

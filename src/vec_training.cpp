@@ -176,10 +176,11 @@ void Vector<T>::reserve(size_t _s_to_reserve)
     T *fresh_tab = new T[_s_to_reserve];
 
     //copy tab
-    // for(int i : this)
-    //     fresh_tab[i] = this[i];
-    //faster way
-    memcpy(fresh_tab, this->_element_ptr, this->size() * sizeof(T));
+    unsigned int cnt =0;
+    for(T i : *this)
+        fresh_tab[cnt++] = i;
+    //faster way but not working with classes with std::string
+    // memcpy(fresh_tab, this->_element_ptr, this->size() * sizeof(T));
 
     delete[] _element_ptr;
     _element_ptr = fresh_tab;
@@ -187,4 +188,18 @@ void Vector<T>::reserve(size_t _s_to_reserve)
     // causing seg fault
 
     _cap = _s_to_reserve;
+}
+
+//emplance_back
+template<class T>
+template<class... Types>
+T* Vector<T>::emplace_back(Types ... args)
+{
+   //if table is to small
+    if ((_size_n + 1) >= _cap)
+        reserve(_size_n + 1);
+    //adding last element
+    this->_element_ptr[_size_n] = T(args...);
+    _size_n++;
+    return this->_element_ptr + _size_n;
 }

@@ -4,14 +4,6 @@
 #include <string>
 
 
-/*
-    naprawić copy assigment
-    coś zepsułem przy porządkowaniu kodu
-*/
-
-//in cppreference it is a struct
-
-
 
 template <class T>
 class Vector
@@ -49,9 +41,11 @@ public:
     T *begin();
     //to last element
     T *end();
-  
     //dyn alocation
     void reserve(size_t _s_to_reserve);
+    //emplancce_back, also returns pointer to modified element
+    template <class ... Types>
+    T *emplace_back(Types ... args);
     
 
     //iterator
