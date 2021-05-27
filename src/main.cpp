@@ -23,8 +23,8 @@ TEST(Vec_main, emplace_back)
 
   for (int i = 0; i <= VEC_TEST_SIZE; i++)
   {
-    std::string name = "Johny" + std::to_string(i);
-    std::string county = "Watikan" + std::to_string(i);
+    std::string name = "John" + std::to_string(i);
+    std::string county = "Italy" + std::to_string(i);
     elections.emplace_back(name, county, i);
   }
 
