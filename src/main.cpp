@@ -1,7 +1,6 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "vec_training.hpp"
-#include "vec_training.cpp" 
 #include <string>
 
 #define VEC_TEST_SIZE 10000
